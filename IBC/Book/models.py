@@ -1,6 +1,7 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 from User.models import User
+from uuid import uuid4
 
 
 # Create your models here.
@@ -18,3 +19,11 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class BookListItem(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    id = models.UUIDField(primary_key=True, default=uuid4)
+
+    def __str__(self):
+        return f"{self.book.title}({self.id})"
