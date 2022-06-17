@@ -27,3 +27,12 @@ class BookListItem(models.Model):
 
     def __str__(self):
         return f"{self.book.title}({self.id})"
+
+
+class BookList(models.Model):
+    name = models.CharField(max_length=20)
+    books = models.ManyToManyField(BookListItem)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
