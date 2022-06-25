@@ -13,3 +13,9 @@ class BookListSerializer(serializers.ModelSerializer):
     class Meta:
         model = BookList
         fields = ['id', 'name', 'books', 'user']
+
+
+class BookListItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BookListItem
+        fields = ['id', 'book']
