@@ -24,6 +24,7 @@ class BookViewSet(ModelViewSet):
 class BookListViewSet(ModelViewSet):
     queryset = BookList.objects.all()
     serializer_class = BookListSerializer
+    permission_classes = []
 
     def get_serializer_context(self):
         return {"request": self.request}
