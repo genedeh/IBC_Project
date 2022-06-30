@@ -20,7 +20,11 @@ class UserViewSet(ModelViewSet):
     def get_permissions(self):
         if self.request.method == 'GET':
             return [AllowAny()]
-        return [IsAuthenticated()]
+        elif self.request.method == 'PUT' or self.request.method == 'PATCH':
+            return [IsAuthenticated()]
+        elif self.request.method == 'DELETE':
+            return [IsAdminUser()]
+        return [AllowAny()]
 
     def get_serializer_class(self):
         if self.request.method == "PATCH" or self.request.method == "POST":

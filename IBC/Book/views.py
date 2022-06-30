@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework import status
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from .models import Book, BookList, BookListItem
@@ -11,6 +12,12 @@ from .serializer import BookSerializer, BookListSerializer, BookListItemSerializ
 class BookViewSet(ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_permissions(self):
+        if self.request.method == 'DELETE':
+            return [IsAdminUser()]
+        return [AllowAny()]
 
     def get_serializer_context(self):
         return {"request": self.request}
@@ -24,7 +31,12 @@ class BookViewSet(ModelViewSet):
 class BookListViewSet(ModelViewSet):
     queryset = BookList.objects.all()
     serializer_class = BookListSerializer
-    permission_classes = []
+    permission_classes = [IsAuthenticated]
+
+    def get_permissions(self):
+        if self.request.method == 'DELETE':
+            return [IsAuthenticated()]
+        return [IsAuthenticated()]
 
     def get_serializer_context(self):
         return {"request": self.request}
@@ -38,6 +50,12 @@ class BookListViewSet(ModelViewSet):
 class BookListItemViewSet(ModelViewSet):
     queryset = BookListItem.objects.all()
     serializer_class = BookListItemSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_permissions(self):
+        if self.request.method == 'DELETE':
+            return [IsAuthenticated()]
+        return [IsAuthenticated()]
 
     def get_serializer_context(self):
         return {"request": self.request}
