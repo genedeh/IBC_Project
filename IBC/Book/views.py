@@ -50,6 +50,7 @@ class BookListViewSet(ModelViewSet):
 class BookListItemViewSet(ModelViewSet):
     queryset = BookListItem.objects.all()
     serializer_class = BookListItemSerializer
+    http_method_names = ['get', 'post', 'patch', 'delete']
     permission_classes = [IsAuthenticated]
 
     def get_permissions(self):
